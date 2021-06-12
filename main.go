@@ -2,10 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 )
 
@@ -18,9 +18,15 @@ func main() {
 
 	scopeDriveReadOnly := "https://www.googleapis.com/auth/drive.readonly"
 	endpoint := "https://oauth2.googleapis.com/token"
-	clientId := os.Args[1]
-	clientSecret := os.Args[2]
-	refreshToken := os.Args[3]
+
+	clientIdPtr := flag.String("client", "", "Client Id")
+	clientSecretPtr := flag.String("secret", "", "Client Secret")
+	refreshTokenPtr := flag.String("refresh", "", "Refresh token")
+	flag.Parse()
+
+	clientId := *clientIdPtr
+	clientSecret := *clientSecretPtr
+	refreshToken := *refreshTokenPtr
 
 	data := url.Values{}
 	data.Set("grant_type", "refresh_token")
